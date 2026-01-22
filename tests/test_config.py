@@ -21,6 +21,19 @@ class ConfigTests(unittest.TestCase):
         self.assertEqual(config.max_recording_seconds, 1)
         self.assertEqual(config.sample_rate, 16000)
 
+    def test_whisper_api_engine_valid(self):
+        config = Config(engine="whisper-api").validate()
+        self.assertEqual(config.engine, "whisper-api")
+
+    def test_whisper_api_language_default(self):
+        config = Config(engine="whisper-api").validate()
+        self.assertEqual(config.whisper_api_language, "")
+
+    def test_all_valid_engines(self):
+        for engine in ["moonshine", "whisper", "whisper-api"]:
+            config = Config(engine=engine).validate()
+            self.assertEqual(config.engine, engine)
+
 
 if __name__ == "__main__":
     unittest.main()
